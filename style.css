@@ -1,0 +1,317 @@
+/* --- Khởi tạo và Bố cục Chung --- */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* KHÔNG CẦN flex-direction: column nữa */
+}
+
+.game-container {
+    background-color: #fff;
+    padding: 20px 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    width: 95%;
+    text-align: center;
+    /* Thêm padding dưới để tránh footer đè lên nội dung */
+    margin-bottom: 60px; 
+}
+
+h1 {
+    color: #34495e;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+/* --- Bảng Điểm --- */
+.scoreboard {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    border-bottom: 2px solid #ecf0f1;
+    margin-bottom: 30px;
+}
+
+.team-score-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.team-name {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #3498db;
+}
+
+.team2 .team-name {
+    color: #e74c3c;
+}
+
+.score-value {
+    font-size: 2.5em;
+    font-weight: 900;
+    color: #2c3e50;
+}
+
+/* --- Khu vực Kéo Co --- */
+.tug-of-war-area {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.team-panel {
+    flex: 1;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ecf0f1;
+    text-align: center;
+    min-width: 200px;
+}
+
+.team1 h2 { color: #3498db; }
+.team2 h2 { color: #e74c3c; }
+
+.problem-box {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 15px 0;
+    padding: 10px;
+    border: 2px dashed #bdc3c7;
+    border-radius: 5px;
+    background-color: #fefefe;
+}
+
+input[type="number"] {
+    padding: 10px;
+    width: 80%;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    text-align: center;
+}
+
+button {
+    background-color: #2ecc71;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #27ae60;
+}
+
+.feedback {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.correct {
+    color: #2ecc71;
+}
+
+.incorrect {
+    color: #e74c3c;
+}
+
+/* --- Khu vực Kéo Co Động --- */
+.tug-rope-container {
+    flex: 2;
+    position: relative;
+    height: 180px; 
+    border-bottom: 5px solid #a0522d; /* Mặt đất (Ground Line) */
+    display: flex;
+    align-items: flex-end; 
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Vạch đỏ trung tâm cố định */
+.center-line {
+    position: absolute;
+    top: 0;
+    left: 50%; /* Vạch trung tâm cố định ở 50% của container */
+    width: 2px;
+    height: 100%;
+    background-color: #e74c3c; /* Màu đỏ */
+    z-index: 10;
+    transform: translateX(-50%); /* Căn giữa tuyệt đối */
+}
+
+/* PHẦN TỬ BAO BỌC DI CHUYỂN */
+#center-marker {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: transform 0.1s linear; /* Thêm chuyển động mượt mà hơn */
+}
+
+/* Dây thừng */
+#rope-line {
+    position: absolute;
+    bottom: 30px; /* Vị trí dây so với mặt đất */
+    left: 0;
+    right: 0;
+    height: 10px;
+    background-color: #8B4513; 
+    z-index: 5;
+}
+
+/* --- Hình ảnh Người chơi MỚI (Giữ nguyên vị trí tương đối) --- */
+.player {
+    width: 150px; 
+    height: 100px; 
+    background-image: url('tug-of-war-players.png'); 
+    background-size: 300px 100px; 
+    background-repeat: no-repeat;
+    background-color: transparent;
+    position: absolute;
+    bottom: 5px; 
+    z-index: 15;
+}
+
+.player1 {
+    background-position: 0 0; 
+    left: 100px; 
+}
+
+.player2 {
+    background-position: -150px 0; 
+    right: 100px; 
+}
+
+/* TRONG style.css: Thay thế toàn bộ CSS cũ của .center-flag */
+
+.center-flag {
+    position: absolute;
+    width: 60px; 
+    height: 40px; 
+    
+    background-color: #ee3c44; /* Màu đỏ cờ */
+    z-index: 25;
+    
+    left: 50%;
+    transform: translateX(-50%); 
+    bottom: 30px; /* Đặt phía trên dây thừng */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+}
+
+/* Ngôi sao vàng (Vẽ bằng CSS - Đã được tối ưu) */
+.center-flag .star {
+    font-size: 20px; /* Tăng kích thước ngôi sao */
+    color: #ffcc00; /* Màu vàng sao */
+    line-height: 1; /* Căn chỉnh */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.center-flag .star::before {
+    content: '★'; /* Ký tự ngôi sao Unicode */
+    display: block;
+}
+
+/* XÓA TẤT CẢ CSS PHỨC TẠP TRƯỚC ĐÓ CỦA :before VÀ :after */
+
+/* --- Vạch đích --- */
+.finish-line {
+    position: absolute;
+    height: 100px; 
+    width: 5px;
+    background-color: transparent; 
+    border-left: 2px dashed #333; 
+    z-index: 5;
+    bottom: 5px;
+}
+
+.finish-line-1 {
+    /* Điều chỉnh để vạch đích xa hơn một chút so với người chơi */
+    left: 50px; 
+}
+
+.finish-line-2 {
+    /* Điều chỉnh để vạch đích xa hơn một chút so với người chơi */
+    right: 50px; 
+}
+
+/* --- Modal thông báo --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 20;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    max-width: 400px;
+}
+
+#winner-message {
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.modal-content button {
+    background-color: #3498db;
+    padding: 12px 25px;
+}
+
+.modal-content button:hover {
+    background-color: #2980b9;
+}
+
+.score-team1 { color: #3498db; }
+.score-team2 { color: #e74c3c; }
+
+/* CSS MỚI: Thông báo người sáng tạo (Fixed Footer) */
+.footer-info {
+    position: fixed; /* Cố định ở vị trí cuối màn hình */
+    bottom: 0; /* Đặt ở đáy */
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+    font-size: 0.9em;
+    color: #7f8c8d;
+    background-color: #f4f7f6; /* Đặt màu nền trùng với body */
+    z-index: 100; /* Đảm bảo nó luôn nằm trên cùng */
+}
+
+.footer-info p {
+    margin: 5px 0;
+}
