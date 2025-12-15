@@ -53,7 +53,7 @@ h1 {
     color: #e67e22;
 }
 
-/* --- Khu vực Kéo Co (ở TRÊN) --- */
+/* --- Khu vực Kéo Co --- */
 .tug-rope-container {
     position: relative;
     height: 180px;
@@ -85,7 +85,7 @@ h1 {
     position: absolute;
     top: 0;
     left: 50%;
-    transform: translateX(-50%); /* vị trí trung tâm ban đầu */
+    transform: translateX(-50%); 
     transition: transform 0.3s ease-out;
 }
 
@@ -96,77 +96,73 @@ h1 {
     background-color: #ee3c44;
     color: #fff;
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 1.5em; 
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 4px 4px 0 0;
-    top: -35px; /* nâng lên khỏi dây */
+    top: -35px; 
+    animation: flag-bob 1s infinite alternate; 
+}
+@keyframes flag-bob {
+    from { transform: translateY(0); }
+    to { transform: translateY(-3px); }
 }
 
-/* Hình người chơi hai bên (sprite) */
-.player {
-    width: 150px;
-    height: 100px;
-    background-image: url('tug-of-war-players.png'); /* thay bằng đường dẫn thực tế */
-    background-size: 300px 100px;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    position: absolute;
-    bottom: 5px;
-    z-index: 15;
-}
-
-/* Cập nhật người chơi 1 và 2 làm người cuối đội */
-.player1 {
-    background-position: 0 0;
-    left: 60px;
-}
-
-.player2 {
-    background-position: -150px 0;
-    right: 60px;
-}
-
-/* Thêm các người chơi giữa (Giàn kéo - 5 người) */
+/* --- Player CSS Blocks (Vẽ nhân vật bằng CSS) --- */
 .player-set {
     position: absolute;
     bottom: 5px;
     display: flex;
     height: 100px;
     z-index: 10;
+    gap: 10px;
 }
 
 .player-set-1 {
-    left: 0; /* Đặt nhóm ở ngoài cùng */
+    left: 50px; 
+    align-items: flex-end;
 }
 
 .player-set-2 {
-    right: 0; /* Đặt nhóm ở ngoài cùng */
-    /* Đảo ngược thứ tự để người cuối cùng gần dây thừng nhất */
+    right: 50px; 
+    align-items: flex-end;
     flex-direction: row-reverse; 
 }
 
-/* Thêm hiệu ứng kéo giãn cho sprite người chơi */
-.player-set-1 .player {
-    background-position: 0 0;
-    transform: translateX(30px); /* Dịch chuyển các người chơi để tạo cảm giác nhóm */
+.player-block {
+    width: 30px;
+    height: 60px;
+    background: #34495e; 
+    border-radius: 10px 10px 0 0;
+    position: relative;
+    transition: all 0.2s ease;
+}
+.player-block::before { 
+    content: ''; position: absolute; top: -15px; left: 5px;
+    width: 20px; height: 20px; background: #ffdbac; border-radius: 50%;
+}
+.player-set-1 .player-block {
+    background: #3498db; 
+}
+.player-set-2 .player-block {
+    background: #e74c3c; 
+}
+.player-main {
+    height: 80px; 
+    width: 40px;
 }
 
-.player-set-2 .player {
-    background-position: -150px 0;
-    transform: translateX(-30px); /* Dịch chuyển các người chơi để tạo cảm giác nhóm */
+/* THÊM: Hiển thị Avatar (Emoji) */
+.player-block::after {
+    content: attr(data-avatar); /* Lấy nội dung từ thuộc tính data-avatar */
+    position: absolute;
+    top: -30px; 
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2em;
+    z-index: 10;
 }
-
-/* Cần thêm một chút điều chỉnh cho các người chơi hiện tại để khớp với nhóm */
-.tug-rope-container .player1 {
-    left: 100px; /* Di chuyển gần hơn vào dây */
-}
-
-.tug-rope-container .player2 {
-    right: 100px; /* Di chuyển gần hơn vào dây */
-}
-
 
 /* Tạo Vạch Đích Chiến Thắng */
 .win-line {
@@ -180,21 +176,18 @@ h1 {
     opacity: 0.8;
 }
 
-/* Tính toán vị trí của vạch đích dựa trên MAX_PULL (150px) */
 .win-line-1 {
-    /* Trung tâm (50%) - 350px (MAX_PULL) */
     left: calc(50% - 350px); 
     border-left: 3px dashed #3498db;
 }
 
 .win-line-2 {
-    /* Trung tâm (50%) + 350px (MAX_PULL) */
     right: calc(50% - 350px);
     border-right: 3px dashed #e74c3c;
 }
 
 
-/* --- Khu vực Bài toán & Nút bấm (ở DƯỚI) --- */
+/* --- Khu vực Bài toán & Nút bấm --- */
 .tug-of-war-area {
     display: flex;
     gap: 20px;
@@ -208,7 +201,8 @@ h1 {
     padding: 15px 20px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     text-align: center;
-    position: relative; /* Bổ sung để kiểm soát bố cục tốt hơn */
+    position: relative;
+    transition: all 0.2s; 
 }
 
 .team-panel h2 {
@@ -229,8 +223,8 @@ h1 {
     color: #2c3e50;
 }
 
-/* Ô nhập và nút */
-input[type="text"] { /* Đã đổi sang type="text" trong index.html */
+/* ... (Phần input, button, feedback, number-pad giữ nguyên) ... */
+input[type="text"] { 
     padding: 10px;
     width: 80%;
     margin-bottom: 15px;
@@ -255,7 +249,6 @@ button:hover {
     background-color: #27ae60;
 }
 
-/* Đảm bảo nút Kéo Dây! hiển thị gọn gàng */
 .number-pad > button:last-of-type {
     width: 100%; 
     margin-top: 5px;
@@ -275,15 +268,13 @@ button:hover {
     margin-top: 20px;
 }
 
-/* Phản hồi đúng/sai */
 .feedback {
     margin-top: 10px;
     font-weight: bold;
     min-height: 20px;
-    width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng của .number-pad */
+    width: 100%; 
     text-align: center;
     padding: 0 5px;
-    /* Xóa các thuộc tính buộc 1 hàng và cắt chữ */
 }
 
 .correct {
@@ -293,10 +284,9 @@ button:hover {
 .incorrect {
     color: #e74c3c;
 }
-/* --- Bảng tính số cho các bé --- */
+
 .number-pad {
     margin: 8px auto 0;
-    /* CHUYỂN SANG DÙNG FLEXBOX ĐỂ DỄ BỐ TRÍ */
     display: flex; 
     flex-wrap: wrap;
     gap: 6px;
@@ -304,17 +294,14 @@ button:hover {
     justify-content: center;
 }
 
-/* Điều chỉnh lại kích thước cho các phím số để chúng vừa khít trong flexbox */
 .number-pad .num-key, 
 .number-pad .action-key {
-    /* Tính toán kích thước để vừa 3 cột với gap 6px và max-width 220px */
-    flex: 0 0 calc(33.333% - 4px); /* Khoảng 69px/nút */
+    flex: 0 0 calc(33.333% - 4px);
     box-sizing: border-box;
     padding: 8px 0;
 }
 
 .number-pad .num-key {
-    /* ghi đè style button chung */
     background-color: #ecf0f1;
     color: #2c3e50;
     border: 1px solid #bdc3c7;
@@ -335,7 +322,7 @@ button:hover {
     background-color: #d68910;
 }
 
-/* --- Footer --- */
+/* --- Footer & Modal --- */
 .footer {
     position: fixed;
     bottom: 0;
@@ -348,7 +335,6 @@ button:hover {
     color: #7f8c8d;
 }
 
-/* --- Modal thông báo thắng cuộc --- */
 .modal {
     position: fixed;
     inset: 0;
@@ -371,4 +357,83 @@ button:hover {
 .modal-content h2 {
     margin-top: 0;
     margin-bottom: 10px;
+}
+
+/* --- HIỆU ỨNG MỚI CHO TRẺ EM --- */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+}
+.shake-anim {
+    animation: shake 0.3s ease-in-out;
+}
+
+@keyframes glow-correct {
+    0% { box-shadow: 0 0 0px #2ecc71; }
+    50% { box-shadow: 0 0 25px #2ecc71; }
+    100% { box-shadow: 0 0 0px #2ecc71; }
+}
+.correct-glow {
+    animation: glow-correct 0.6s ease-in-out;
+}
+
+/* --- STYLE CÀI ĐẶT TÊN ĐỘI --- */
+.team-setup-container {
+    background-color: #ecf0f1;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.setup-team {
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    flex: 1;
+    min-width: 280px;
+}
+
+.setup-team label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #34495e;
+    text-align: left;
+}
+
+.setup-team input[type="text"], .setup-team select {
+    width: 95%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+#start-game-btn {
+    background-color: #f39c12; 
+    padding: 12px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+    flex-basis: 100%; 
+}
+
+#start-game-btn:hover {
+    background-color: #e67e22;
+}
+
+/* Hiển thị Game Content khi Active */
+#game-content.active {
+    display: block !important;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
 }
