@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Kéo Co Toán Học</title>
+    <title>Kéo Co Toán Học - Cá Nhân Hóa</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -10,107 +10,130 @@
     <div class="game-container">
         <h1>KÉO CO TOÁN HỌC - HỌC MÀ CHƠI</h1>
 
-        <div class="scoreboard">
-            <div class="team-score-wrapper">
-                <span class="team-name">Đội 1</span>
-                <span class="team-score">
-                    <span id="score-team1">0</span>
-                </span>
+        <div class="team-setup-container">
+            <div class="setup-team setup-team1">
+                <label for="teamName1">Tên Đội 1:</label>
+                <input type="text" id="teamName1" value="Đội Siêu Nhân" maxlength="15">
+                <label for="avatarSelect1">Chọn Avatar:</label>
+                <select id="avatarSelect1" class="avatar-select">
+                    <option value="🚀">🚀 Tên Lửa</option>
+                    <option value="🦁">🦁 Sư Tử</option>
+                    <option value="🦄" selected>🦄 Kỳ Lân</option>
+                    <option value="🤖">🤖 Robot</option>
+                </select>
             </div>
-            <div class="team-score-wrapper">
-                <span class="team-name">Đội 2</span>
-                <span class="team-score">
-                    <span id="score-team2">0</span>
-                </span>
+            <div class="setup-team setup-team2">
+                <label for="teamName2">Tên Đội 2:</label>
+                <input type="text" id="teamName2" value="Đội Công Chúa" maxlength="15">
+                <label for="avatarSelect2">Chọn Avatar:</label>
+                <select id="avatarSelect2" class="avatar-select">
+                    <option value="👑" selected>👑 Vương Miện</option>
+                    <option value="🦖">🦖 Khủng Long</option>
+                    <option value="⚽">⚽ Bóng Đá</option>
+                    <option value="💖">💖 Trái Tim</option>
+                </select>
             </div>
+            <button id="start-game-btn" type="button">BẮT ĐẦU CUỘC ĐUA! 🏁</button>
         </div>
 
-        <div class="tug-rope-container">
-            <div class="win-line win-line-1"></div>
-            <div class="win-line win-line-2"></div>
-            
-            <div class="player-set player-set-1">
-                <div class="player"></div>
-                <div class="player"></div>
-                <div class="player"></div>
-                <div class="player"></div>
-            </div>
-            <div class="player player1"></div> 
+        <div id="game-content" style="display: none;">
 
-            <div class="player-set player-set-2">
-                <div class="player"></div>
-                <div class="player"></div>
-                <div class="player"></div>
-                <div class="player"></div>
-            </div>
-            <div class="player player2"></div>
-
-            <div class="rope-line">
-                <div class="flag-wrapper">
-                    <div class="center-flag">★</div>
+            <div class="scoreboard">
+                <div class="team-score-wrapper">
+                    <span class="team-name" id="displayTeamName1">Đội 1</span>
+                    <span class="team-score">
+                        <span id="score-team1">0</span>
+                    </span>
+                </div>
+                <div class="team-score-wrapper">
+                    <span class="team-name" id="displayTeamName2">Đội 2</span>
+                    <span class="team-score">
+                        <span id="score-team2">0</span>
+                    </span>
                 </div>
             </div>
-        </div>
 
-        <div class="tug-of-war-area">
-            <div class="team-panel team1">
-                <h2>Đội 1</h2>
-                <div class="problem" id="problem1">?? + ?? = ?</div>
-				<input type="text" id="answer1" placeholder="Nhập đáp án" inputmode="numeric" pattern="[0-9]*">		
-				
-                    <div class="number-pad" data-team="1">
+            <div class="tug-rope-container">
+                <div class="win-line win-line-1"></div>
+                <div class="win-line win-line-2"></div>
+                
+                <div class="player-set player-set-1">
+                    <div class="player player-block" data-avatar="🦄"></div>
+                    <div class="player player-block" data-avatar="🦄"></div>
+                    <div class="player player-block player-main" data-avatar="🦄"></div>
+                </div>
+
+                <div class="rope-line">
+                    <div class="flag-wrapper">
+                        <div class="center-flag">🚩</div>
+                    </div>
+                </div>
+
+                <div class="player-set player-set-2">
+                    <div class="player player-block player-main" data-avatar="👑"></div>
+                    <div class="player player-block" data-avatar="👑"></div>
+                    <div class="player player-block" data-avatar="👑"></div>
+                </div>
+            </div>
+
+            <div class="tug-of-war-area">
+                <div class="team-panel team1">
+                    <h2 id="teamHeader1">Đội 1</h2>
+                    <div class="problem" id="problem1">?? + ?? = ?</div>
+                    <input type="text" id="answer1" placeholder="Nhập đáp án" inputmode="numeric" pattern="[0-9]*" autocomplete="off">		
+                    
+                        <div class="number-pad" data-team="1">
+                            <button type="button" class="num-key" data-digit="1">1</button>
+                            <button type="button" class="num-key" data-digit="2">2</button>
+                            <button type="button" class="num-key" data-digit="3">3</button>
+                            <button type="button" class="num-key" data-digit="4">4</button>
+                            <button type="button" class="num-key" data-digit="5">5</button>
+                            <button type="button" class="num-key" data-digit="6">6</button>
+                            <button type="button" class="num-key" data-digit="7">7</button>
+                            <button type="button" class="num-key" data-digit="8">8</button>
+                            <button type="button" class="num-key" data-digit="9">9</button>
+                            <button type="button" class="num-key" data-digit="0">0</button>
+                            <button type="button" class="num-key action-key" data-action="back">←</button>
+                            <button type="button" class="num-key action-key" data-action="clear">Xóa</button>
+                            <button type="button">Kéo Dây!</button>
+                            <div class="feedback" id="feedback1"></div>
+                        </div>
+                    </div>
+
+                <div class="team-panel team2">
+                    <h2 id="teamHeader2">Đội 2</h2>
+                    <div class="problem" id="problem2">?? + ?? = ?</div>
+                    <input type="text" id="answer2" placeholder="Nhập đáp án" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+                    
+                    <div class="number-pad" data-team="2">
                         <button type="button" class="num-key" data-digit="1">1</button>
-						<button type="button" class="num-key" data-digit="2">2</button>
-						<button type="button" class="num-key" data-digit="3">3</button>
-						<button type="button" class="num-key" data-digit="4">4</button>
-						<button type="button" class="num-key" data-digit="5">5</button>
-						<button type="button" class="num-key" data-digit="6">6</button>
-						<button type="button" class="num-key" data-digit="7">7</button>
-						<button type="button" class="num-key" data-digit="8">8</button>
-						<button type="button" class="num-key" data-digit="9">9</button>
-						<button type="button" class="num-key" data-digit="0">0</button>
-						<button type="button" class="num-key action-key" data-action="back">←</button>
-						<button type="button" class="num-key action-key" data-action="clear">Xóa</button>
-						<button type="button">Kéo Dây!</button>
-						<div class="feedback" id="feedback1"></div>
-					</div>
-				</div>
+                        <button type="button" class="num-key" data-digit="2">2</button>
+                        <button type="button" class="num-key" data-digit="3">3</button>
+                        <button type="button" class="num-key" data-digit="4">4</button>
+                        <button type="button" class="num-key" data-digit="5">5</button>
+                        <button type="button" class="num-key" data-digit="6">6</button>
+                        <button type="button" class="num-key" data-digit="7">7</button>
+                        <button type="button" class="num-key" data-digit="8">8</button>
+                        <button type="button" class="num-key" data-digit="9">9</button>
+                        <button type="button" class="num-key" data-digit="0">0</button>
+                        <button type="button" class="num-key action-key" data-action="back">←</button>
+                        <button type="button" class="num-key action-key" data-action="clear">Xóa</button>
+                        <button type="button">Kéo Dây!</button>
+                        <div class="feedback" id="feedback2"></div>
+                    </div>
+                </div>
+            </div>
 
-            <div class="team-panel team2">
-                <h2>Đội 2</h2>
-                <div class="problem" id="problem2">?? + ?? = ?</div>
-				<input type="text" id="answer2" placeholder="Nhập đáp án" inputmode="numeric" pattern="[0-9]*">
-				
-				<div class="number-pad" data-team="2">
-					<button type="button" class="num-key" data-digit="1">1</button>
-					<button type="button" class="num-key" data-digit="2">2</button>
-					<button type="button" class="num-key" data-digit="3">3</button>
-					<button type="button" class="num-key" data-digit="4">4</button>
-					<button type="button" class="num-key" data-digit="5">5</button>
-					<button type="button" class="num-key" data-digit="6">6</button>
-					<button type="button" class="num-key" data-digit="7">7</button>
-					<button type="button" class="num-key" data-digit="8">8</button>
-					<button type="button" class="num-key" data-digit="9">9</button>
-					<button type="button" class="num-key" data-digit="0">0</button>
-					<button type="button" class="num-key action-key" data-action="back">←</button>
-					<button type="button" class="num-key action-key" data-action="clear">Xóa</button>
-					<button type="button">Kéo Dây!</button>
-					<div class="feedback" id="feedback2"></div>
-				</div>
-			
-
+            <div class="controls">
+                <button id="new-round-btn" class="secondary-btn" type="button">
+                    Vòng Mới (Giữ Tỉ Số)
+                </button>
             </div>
         </div>
-
-        <div class="controls">
-            <button id="new-round-btn" class="secondary-btn" type="button">
-                Vòng Mới
-            </button>
         </div>
-    </div>
 
     <footer class="footer">
-        <p>Phiên bản Trò chơi Toán học Kéo Co - Phát triển bởi <strong>Thai Luu</strong></p>
+        <p>Phiên bản Trò chơi Toán học Kéo Co - Phát triển bởi <strong>Thomas Luu</strong></p>
         <p>Bản quyền © 2025</p>
     </footer>
 
